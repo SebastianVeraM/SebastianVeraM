@@ -1,0 +1,293 @@
+
+ThaiKauri_ATTiny85.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001be  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000212  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000212  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000244  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000060  00000000  00000000  00000280  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008f3  00000000  00000000  000002e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000053f  00000000  00000000  00000bd3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000005c5  00000000  00000000  00001112  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000ec  00000000  00000000  000016d8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003de  00000000  00000000  000017c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000003af  00000000  00000000  00001ba2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000050  00000000  00000000  00001f51  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	15 c0       	rjmp	.+42     	; 0x2e <__bad_interrupt>
+   4:	a8 c0       	rjmp	.+336    	; 0x156 <__vector_2>
+   6:	13 c0       	rjmp	.+38     	; 0x2e <__bad_interrupt>
+   8:	12 c0       	rjmp	.+36     	; 0x2e <__bad_interrupt>
+   a:	11 c0       	rjmp	.+34     	; 0x2e <__bad_interrupt>
+   c:	10 c0       	rjmp	.+32     	; 0x2e <__bad_interrupt>
+   e:	0f c0       	rjmp	.+30     	; 0x2e <__bad_interrupt>
+  10:	0e c0       	rjmp	.+28     	; 0x2e <__bad_interrupt>
+  12:	0d c0       	rjmp	.+26     	; 0x2e <__bad_interrupt>
+  14:	0c c0       	rjmp	.+24     	; 0x2e <__bad_interrupt>
+  16:	0b c0       	rjmp	.+22     	; 0x2e <__bad_interrupt>
+  18:	0a c0       	rjmp	.+20     	; 0x2e <__bad_interrupt>
+  1a:	09 c0       	rjmp	.+18     	; 0x2e <__bad_interrupt>
+  1c:	08 c0       	rjmp	.+16     	; 0x2e <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+  2a:	c4 d0       	rcall	.+392    	; 0x1b4 <main>
+  2c:	c6 c0       	rjmp	.+396    	; 0x1ba <_exit>
+
+0000002e <__bad_interrupt>:
+  2e:	e8 cf       	rjmp	.-48     	; 0x0 <__vectors>
+
+00000030 <_Z6configv>:
+		OCR0B = 128 - i;									// Register where the compare value is stored and PWM signal will be sent from OC0B -> PA7 | GREEN
+		OCR1A = i;									// Register where the compare value is stored and PWM signal will be sent from OC0A -> PA6 | RED
+		_delay_ms(t);
+	}
+	
+	for (int i = 255;i > 0; i--)					// For cycle to change the led brightness
+  30:	f8 94       	cli
+  32:	83 b7       	in	r24, 0x33	; 51
+  34:	83 bf       	out	0x33, r24	; 51
+  36:	8a b5       	in	r24, 0x2a	; 42
+  38:	83 60       	ori	r24, 0x03	; 3
+  3a:	8a bd       	out	0x2a, r24	; 42
+  3c:	8a b5       	in	r24, 0x2a	; 42
+  3e:	80 68       	ori	r24, 0x80	; 128
+  40:	8a bd       	out	0x2a, r24	; 42
+  42:	8a b5       	in	r24, 0x2a	; 42
+  44:	80 62       	ori	r24, 0x20	; 32
+  46:	8a bd       	out	0x2a, r24	; 42
+  48:	83 b7       	in	r24, 0x33	; 51
+  4a:	81 60       	ori	r24, 0x01	; 1
+  4c:	83 bf       	out	0x33, r24	; 51
+  4e:	8c b5       	in	r24, 0x2c	; 44
+  50:	80 64       	ori	r24, 0x40	; 64
+  52:	8c bd       	out	0x2c, r24	; 44
+  54:	8c b5       	in	r24, 0x2c	; 44
+  56:	80 61       	ori	r24, 0x10	; 16
+  58:	8c bd       	out	0x2c, r24	; 44
+  5a:	80 b7       	in	r24, 0x30	; 48
+  5c:	81 60       	ori	r24, 0x01	; 1
+  5e:	80 bf       	out	0x30, r24	; 48
+  60:	19 bc       	out	0x29, r1	; 41
+  62:	18 bc       	out	0x28, r1	; 40
+  64:	1b bc       	out	0x2b, r1	; 43
+  66:	8b b7       	in	r24, 0x3b	; 59
+  68:	80 62       	ori	r24, 0x20	; 32
+  6a:	8b bf       	out	0x3b, r24	; 59
+  6c:	85 b3       	in	r24, 0x15	; 21
+  6e:	8c 62       	ori	r24, 0x2C	; 44
+  70:	85 bb       	out	0x15, r24	; 21
+  72:	78 94       	sei
+  74:	87 b3       	in	r24, 0x17	; 23
+  76:	87 bb       	out	0x17, r24	; 23
+  78:	87 b3       	in	r24, 0x17	; 23
+  7a:	83 61       	ori	r24, 0x13	; 19
+  7c:	87 bb       	out	0x17, r24	; 23
+  7e:	08 95       	ret
+
+00000080 <_Z13brightnessLEDv>:
+  80:	80 e0       	ldi	r24, 0x00	; 0
+  82:	90 e0       	ldi	r25, 0x00	; 0
+  84:	8f 3f       	cpi	r24, 0xFF	; 255
+  86:	91 05       	cpc	r25, r1
+  88:	5c f4       	brge	.+22     	; 0xa0 <_Z13brightnessLEDv+0x20>
+  8a:	89 bd       	out	0x29, r24	; 41
+  8c:	88 bd       	out	0x28, r24	; 40
+  8e:	8e bd       	out	0x2e, r24	; 46
+  90:	ef e9       	ldi	r30, 0x9F	; 159
+  92:	ff e0       	ldi	r31, 0x0F	; 15
+  94:	31 97       	sbiw	r30, 0x01	; 1
+  96:	f1 f7       	brne	.-4      	; 0x94 <_Z13brightnessLEDv+0x14>
+  98:	00 c0       	rjmp	.+0      	; 0x9a <_Z13brightnessLEDv+0x1a>
+  9a:	00 00       	nop
+  9c:	01 96       	adiw	r24, 0x01	; 1
+  9e:	f2 cf       	rjmp	.-28     	; 0x84 <_Z13brightnessLEDv+0x4>
+  a0:	8f ef       	ldi	r24, 0xFF	; 255
+  a2:	90 e0       	ldi	r25, 0x00	; 0
+  a4:	18 16       	cp	r1, r24
+  a6:	19 06       	cpc	r1, r25
+  a8:	5c f4       	brge	.+22     	; 0xc0 <_Z13brightnessLEDv+0x40>
+  aa:	89 bd       	out	0x29, r24	; 41
+  ac:	88 bd       	out	0x28, r24	; 40
+  ae:	8e bd       	out	0x2e, r24	; 46
+  b0:	ef e9       	ldi	r30, 0x9F	; 159
+  b2:	ff e0       	ldi	r31, 0x0F	; 15
+  b4:	31 97       	sbiw	r30, 0x01	; 1
+  b6:	f1 f7       	brne	.-4      	; 0xb4 <_Z13brightnessLEDv+0x34>
+  b8:	00 c0       	rjmp	.+0      	; 0xba <_Z13brightnessLEDv+0x3a>
+  ba:	00 00       	nop
+  bc:	01 97       	sbiw	r24, 0x01	; 1
+  be:	f2 cf       	rjmp	.-28     	; 0xa4 <_Z13brightnessLEDv+0x24>
+  c0:	08 95       	ret
+
+000000c2 <_Z4loopv>:
+  c2:	de df       	rcall	.-68     	; 0x80 <_Z13brightnessLEDv>
+  c4:	08 95       	ret
+
+000000c6 <_Z9fireSpearv>:
+  c6:	80 e0       	ldi	r24, 0x00	; 0
+  c8:	90 e0       	ldi	r25, 0x00	; 0
+  ca:	8f 3f       	cpi	r24, 0xFF	; 255
+  cc:	91 05       	cpc	r25, r1
+  ce:	64 f4       	brge	.+24     	; 0xe8 <_Z9fireSpearv+0x22>
+  d0:	19 bc       	out	0x29, r1	; 41
+  d2:	88 bd       	out	0x28, r24	; 40
+  d4:	2f ef       	ldi	r18, 0xFF	; 255
+  d6:	2e bd       	out	0x2e, r18	; 46
+  d8:	ef e9       	ldi	r30, 0x9F	; 159
+  da:	ff e0       	ldi	r31, 0x0F	; 15
+  dc:	31 97       	sbiw	r30, 0x01	; 1
+  de:	f1 f7       	brne	.-4      	; 0xdc <_Z9fireSpearv+0x16>
+  e0:	00 c0       	rjmp	.+0      	; 0xe2 <_Z9fireSpearv+0x1c>
+  e2:	00 00       	nop
+  e4:	01 96       	adiw	r24, 0x01	; 1
+  e6:	f1 cf       	rjmp	.-30     	; 0xca <_Z9fireSpearv+0x4>
+  e8:	8f ef       	ldi	r24, 0xFF	; 255
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	18 16       	cp	r1, r24
+  ee:	19 06       	cpc	r1, r25
+  f0:	74 f4       	brge	.+28     	; 0x10e <_Z9fireSpearv+0x48>
+  f2:	28 2f       	mov	r18, r24
+  f4:	20 95       	com	r18
+  f6:	29 bd       	out	0x29, r18	; 41
+  f8:	88 bd       	out	0x28, r24	; 40
+  fa:	2f ef       	ldi	r18, 0xFF	; 255
+  fc:	2e bd       	out	0x2e, r18	; 46
+  fe:	ef e9       	ldi	r30, 0x9F	; 159
+ 100:	ff e0       	ldi	r31, 0x0F	; 15
+ 102:	31 97       	sbiw	r30, 0x01	; 1
+ 104:	f1 f7       	brne	.-4      	; 0x102 <_Z9fireSpearv+0x3c>
+ 106:	00 c0       	rjmp	.+0      	; 0x108 <_Z9fireSpearv+0x42>
+ 108:	00 00       	nop
+ 10a:	01 97       	sbiw	r24, 0x01	; 1
+ 10c:	ef cf       	rjmp	.-34     	; 0xec <_Z9fireSpearv+0x26>
+ 10e:	08 95       	ret
+
+00000110 <_Z9grassMaskv>:
+ 110:	80 e0       	ldi	r24, 0x00	; 0
+ 112:	90 e0       	ldi	r25, 0x00	; 0
+ 114:	8f 3f       	cpi	r24, 0xFF	; 255
+ 116:	91 05       	cpc	r25, r1
+ 118:	64 f4       	brge	.+24     	; 0x132 <_Z9grassMaskv+0x22>
+ 11a:	20 e8       	ldi	r18, 0x80	; 128
+ 11c:	29 bd       	out	0x29, r18	; 41
+ 11e:	88 bd       	out	0x28, r24	; 40
+ 120:	2e bd       	out	0x2e, r18	; 46
+ 122:	ef e9       	ldi	r30, 0x9F	; 159
+ 124:	ff e0       	ldi	r31, 0x0F	; 15
+ 126:	31 97       	sbiw	r30, 0x01	; 1
+ 128:	f1 f7       	brne	.-4      	; 0x126 <_Z9grassMaskv+0x16>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <_Z9grassMaskv+0x1c>
+ 12c:	00 00       	nop
+ 12e:	01 96       	adiw	r24, 0x01	; 1
+ 130:	f1 cf       	rjmp	.-30     	; 0x114 <_Z9grassMaskv+0x4>
+ 132:	8f ef       	ldi	r24, 0xFF	; 255
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+ 136:	18 16       	cp	r1, r24
+ 138:	19 06       	cpc	r1, r25
+ 13a:	64 f4       	brge	.+24     	; 0x154 <_Z9grassMaskv+0x44>
+ 13c:	20 e8       	ldi	r18, 0x80	; 128
+ 13e:	29 bd       	out	0x29, r18	; 41
+ 140:	88 bd       	out	0x28, r24	; 40
+ 142:	2e bd       	out	0x2e, r18	; 46
+ 144:	ef e9       	ldi	r30, 0x9F	; 159
+ 146:	ff e0       	ldi	r31, 0x0F	; 15
+ 148:	31 97       	sbiw	r30, 0x01	; 1
+ 14a:	f1 f7       	brne	.-4      	; 0x148 <_Z9grassMaskv+0x38>
+ 14c:	00 c0       	rjmp	.+0      	; 0x14e <_Z9grassMaskv+0x3e>
+ 14e:	00 00       	nop
+ 150:	01 97       	sbiw	r24, 0x01	; 1
+ 152:	f1 cf       	rjmp	.-30     	; 0x136 <_Z9grassMaskv+0x26>
+ 154:	08 95       	ret
+
+00000156 <__vector_2>:
+ 156:	1f 92       	push	r1
+ 158:	0f 92       	push	r0
+ 15a:	0f b6       	in	r0, 0x3f	; 63
+ 15c:	0f 92       	push	r0
+ 15e:	11 24       	eor	r1, r1
+ 160:	2f 93       	push	r18
+ 162:	3f 93       	push	r19
+ 164:	4f 93       	push	r20
+ 166:	5f 93       	push	r21
+ 168:	6f 93       	push	r22
+ 16a:	7f 93       	push	r23
+ 16c:	8f 93       	push	r24
+ 16e:	9f 93       	push	r25
+ 170:	af 93       	push	r26
+ 172:	bf 93       	push	r27
+ 174:	ef 93       	push	r30
+ 176:	ff 93       	push	r31
+ 178:	b2 9b       	sbis	0x16, 2	; 22
+ 17a:	04 c0       	rjmp	.+8      	; 0x184 <__vector_2+0x2e>
+ 17c:	b2 9b       	sbis	0x16, 2	; 22
+ 17e:	08 c0       	rjmp	.+16     	; 0x190 <__vector_2+0x3a>
+ 180:	a2 df       	rcall	.-188    	; 0xc6 <_Z9fireSpearv>
+ 182:	fc cf       	rjmp	.-8      	; 0x17c <__vector_2+0x26>
+ 184:	b3 9b       	sbis	0x16, 3	; 22
+ 186:	04 c0       	rjmp	.+8      	; 0x190 <__vector_2+0x3a>
+ 188:	b3 9b       	sbis	0x16, 3	; 22
+ 18a:	02 c0       	rjmp	.+4      	; 0x190 <__vector_2+0x3a>
+ 18c:	c1 df       	rcall	.-126    	; 0x110 <_Z9grassMaskv>
+ 18e:	fc cf       	rjmp	.-8      	; 0x188 <__vector_2+0x32>
+ 190:	18 95       	reti
+ 192:	ff 91       	pop	r31
+ 194:	ef 91       	pop	r30
+ 196:	bf 91       	pop	r27
+ 198:	af 91       	pop	r26
+ 19a:	9f 91       	pop	r25
+ 19c:	8f 91       	pop	r24
+ 19e:	7f 91       	pop	r23
+ 1a0:	6f 91       	pop	r22
+ 1a2:	5f 91       	pop	r21
+ 1a4:	4f 91       	pop	r20
+ 1a6:	3f 91       	pop	r19
+ 1a8:	2f 91       	pop	r18
+ 1aa:	0f 90       	pop	r0
+ 1ac:	0f be       	out	0x3f, r0	; 63
+ 1ae:	0f 90       	pop	r0
+ 1b0:	1f 90       	pop	r1
+ 1b2:	18 95       	reti
+
+000001b4 <main>:
+	}
+}
+
+int main(void)
+{
+	config();	
+ 1b4:	3d df       	rcall	.-390    	; 0x30 <_Z6configv>
+	while (1)
+	{
+		loop();
+ 1b6:	85 df       	rcall	.-246    	; 0xc2 <_Z4loopv>
+ 1b8:	fe cf       	rjmp	.-4      	; 0x1b6 <main+0x2>
+
+000001ba <_exit>:
+ 1ba:	f8 94       	cli
+
+000001bc <__stop_program>:
+ 1bc:	ff cf       	rjmp	.-2      	; 0x1bc <__stop_program>
